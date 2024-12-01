@@ -1,34 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbdd0707-8007-4253-8203-9bfd8c52ce5c" name="Changes" comment="" />
+    <list default="true" id="e5e96542-4760-4850-abbf-8b6e9dcd278a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/AuthApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/config/JwtAuthFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/config/JwtAuthFilterConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/config/MongoConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/config/UserAuthenticationEntryPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/config/UserAuthenticationProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/config/WebConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/controllers/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/controllers/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/dtos/CreateUserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/dtos/ErrorDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/dtos/JwtResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/dtos/RefreshTokenRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/dtos/UserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/dtos/UserLoginDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/exceptions/AppException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/exceptions/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/helpers/GenerateUniqueName.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/models/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/repositories/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/java/com/example/auth/services/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/auth/src/test/java/com/example/auth/AuthApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/src/main/java/com/example/eureka/EurekaApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka/eureka/src/test/java/com/example/eureka/EurekaApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gateway.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/gateway.log # Optional" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/GatewayApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/example/gateway/config/WebSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/test/java/com/example/gateway/GatewayApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/src/main/java/com/example/notification/NotificationApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/src/main/java/com/example/notification/models/Notification.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/src/main/java/com/example/notification/repositories/NotificationRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/src/main/java/com/example/notification/services/NotificationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notification/notification/src/test/java/com/example/notification/NotificationApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/PostApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/client/UserClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/controllers/ImageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/controllers/PostController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/dtos/CreateDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/dtos/UserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/dtos/WithLikesCount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/exceptions/AppException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/models/Post.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/models/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/repositories/PostRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/services/ImageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/java/com/example/post/services/PostService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/post/src/test/java/com/example/post/PostApplicationTests.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
-  <component name="ProjectId" id="2pOTbuP1SL4fxfRRttoZLqzYxKi" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2pOTdy3tqsSMrNA2yUiDiHfrgEl" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.GatewayApplication.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true"
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.example.gateway.config" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.gateway.config" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="cbdd0707-8007-4253-8203-9bfd8c52ce5c" name="Changes" comment="" />
-      <created>1732636197272</created>
+      <changelist id="e5e96542-4760-4850-abbf-8b6e9dcd278a" name="Changes" comment="" />
+      <created>1732636212276</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1732636197272</updated>
+      <updated>1732636212276</updated>
     </task>
     <servers />
   </component>
