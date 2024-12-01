@@ -79,7 +79,6 @@ public class WebSecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable) // Disable CSRF
-                .cors().and() // Enable CORS
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/api/user/**", "/api/post/**").permitAll() // Public APIs
                         .anyExchange().authenticated() // Secure other endpoints
