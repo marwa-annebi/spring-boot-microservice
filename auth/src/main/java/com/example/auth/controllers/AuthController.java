@@ -3,6 +3,7 @@ package com.example.auth.controllers;
 
 import com.example.auth.config.UserAuthenticationProvider;
 import com.example.auth.dtos.*;
+import com.example.auth.models.User;
 import com.example.auth.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,16 @@ import java.net.URI;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin
 public class AuthController {
     private final UserService userService;
     private final UserAuthenticationProvider userAuthenticationProvider;
+
+    @GetMapping("/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+        User user = userService.findByEmail(email);
+        return ResponseEntity.ok(user);
+    }
 
     @PostMapping("/login")
     public JwtResponse login(@RequestBody @Valid UserLoginDto credentialsDto) {
@@ -40,7 +48,7 @@ public class AuthController {
 
         // Decode refresh token to get user information
         String refreshToken = refreshTokenRequest.getToken();
-        UserDto userDto = userAuthenticationProvider.decodeRefreshToken(refreshToken);
+        User userDto = userAuthenticationProvider.decodeRefreshToken(refreshToken);
 
         // Create a new access token for the user
         String accessToken = userAuthenticationProvider.createToken(userDto.getEmail());

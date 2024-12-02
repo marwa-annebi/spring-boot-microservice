@@ -1,7 +1,9 @@
 package com.example.post.services;
 
 import com.example.post.client.UserClient;
+import com.example.post.config.SecurityUtils;
 import com.example.post.dtos.CreateDto;
+import com.example.post.dtos.UserDto;
 import com.example.post.dtos.WithLikesCount;
 import com.example.post.models.Post;
 import com.example.post.models.User;
@@ -49,9 +51,13 @@ public class PostService {
     }
 
     public Post create(CreateDto createPostDto, List<MultipartFile> images) throws IOException {
-        String userEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userClient.findByEmail(userEmail); // Retrieve user details via Feign client
+        // Get authenticated user
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("userDetails: " + userDetails);
 
+        // Fetch user by email
+        User user = userClient.findByEmail(userDetails.getEmail());
+        System.out.println("user: " + user);
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
         }
@@ -85,31 +91,35 @@ public class PostService {
 
     public Page<WithLikesCount> findAllByPageAndUsername(String searchTerm, Pageable pageable) {
         List<AggregationOperation> operations = new ArrayList<>();
-        String userEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userClient.findByEmail(userEmail);
+
+        // Get authenticated user
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("userDetails: " + userDetails);
+
+        // Fetch user by email
+        User user = userClient.findByEmail(userDetails.getEmail());
+        System.out.println("user: " + user);
 
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
         }
 
-        Criteria matchCriteria = Criteria.where("postedBy").ne(new ObjectId(user.getId()));
+
+
+        // Exclude posts by the same user
+        Criteria matchCriteria = Criteria.where("postedBy").ne(new ObjectId(user.getId().toString()));
         AggregationOperation matchOperation = Aggregation.match(matchCriteria);
         operations.add(matchOperation);
 
         // Add search term filter
         if (StringUtils.hasText(searchTerm)) {
-            Criteria searchCriteria = Criteria.where("description").regex(Pattern.compile(searchTerm, Pattern.CASE_INSENSITIVE));
+            Criteria searchCriteria = Criteria.where("description")
+                    .regex(Pattern.compile(searchTerm, Pattern.CASE_INSENSITIVE));
             operations.add(Aggregation.match(searchCriteria));
         }
 
         // Count likes for each post
-        operations.add(Aggregation.lookup("likes", "_id", "post", "likes"));
-        operations.add(Aggregation.project("_id", "description", "images", "postedBy", "comments", "createdAt", "updatedAt")
-                .and(ArrayOperators.Size.lengthOfArray("likes")).as("likesCount")
-                .and(ConditionalOperators.when(
-                                ComparisonOperators.valueOf("likes.likedBy").equalToValue(Collections.singletonList(new ObjectId(user.getId()))))
-                        .then(true)
-                        .otherwise(false)).as("liked"));
+
 
         // Sort and paginate
         operations.add(Aggregation.sort(Sort.by(Sort.Direction.DESC, "createdAt")));
@@ -127,8 +137,13 @@ public class PostService {
     }
 
     private long getCountOfMatchedDocuments(String searchTerm, boolean myPosts) {
-        String userEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userClient.findByEmail(userEmail);
+        // Get authenticated user
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("userDetails: " + userDetails);
+
+        // Fetch user by email
+        User user = userClient.findByEmail(userDetails.getEmail());
+        System.out.println("user: " + user);
 
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
@@ -148,31 +163,42 @@ public class PostService {
     }
 
     public Page<WithLikesCount> myPosts(Pageable pageable) {
-        String userEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userClient.findByEmail(userEmail);
+        // Extract user ID from the authenticated JWT token
+        // Get authenticated user
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("userDetails: " + userDetails);
 
+        // Fetch user by email
+        User user = userClient.findByEmail(userDetails.getEmail());
+        System.out.println("user: " + user);
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
         }
 
-        Criteria criteria = Criteria.where("postedBy").is(new ObjectId(user.getId()));
+        // Use the user ID to filter posts
+        Criteria criteria = Criteria.where("postedBy").is(new ObjectId(user.getId().toString()));
+
+        // MongoDB aggregation pipeline
         Aggregation aggregation = Aggregation.newAggregation(
-                Aggregation.match(criteria),
-                Aggregation.lookup("likes", "_id", "post", "likes"),
+                Aggregation.match(criteria), // Filter posts by user ID
+                Aggregation.lookup("likes", "_id", "post", "likes"), // Join with 'likes' collection
                 Aggregation.project("_id", "description", "images", "postedBy", "comments", "createdAt", "updatedAt")
-                        .and(ArrayOperators.Size.lengthOfArray("likes")).as("likesCount")
+                        .and(ArrayOperators.Size.lengthOfArray("likes")).as("likesCount") // Count likes
                         .and(ConditionalOperators.when(
-                                        ComparisonOperators.valueOf("likes.likedBy").equalToValue(Collections.singletonList(new ObjectId(user.getId()))))
+                                        ComparisonOperators.valueOf("likes.likedBy").equalToValue(new ObjectId(user.getId().toString())))
                                 .then(true)
-                                .otherwise(false)).as("liked"),
-                Aggregation.sort(Sort.by(Sort.Direction.DESC, "createdAt")),
-                Aggregation.skip(pageable.getOffset()),
+                                .otherwise(false)).as("liked"), // Check if user liked the post
+                Aggregation.sort(Sort.by(Sort.Direction.DESC, "createdAt")), // Sort by creation date
+                Aggregation.skip(pageable.getOffset()), // Pagination
                 Aggregation.limit(pageable.getPageSize())
         );
 
+        // Execute aggregation query
         List<WithLikesCount> posts = mongoTemplate.aggregate(aggregation, "posts", WithLikesCount.class).getMappedResults();
+
         long count = getCountOfMatchedDocuments("", true);
 
         return new PageImpl<>(posts, pageable, count);
     }
+
 }

@@ -1,11 +1,12 @@
-package com.example.auth.config;
+package com.example.post.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.auth.models.User;
-import com.example.auth.services.UserService;
+import com.example.post.client.UserClient;
+import com.example.post.dtos.UserDto;
+import com.example.post.models.User;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,7 @@ public class UserAuthenticationProvider {
     @Value("${security.jwt.refresh-token.validity-ms:15552000000}") // Validity for refresh token is 180 days
     private long refreshTokenValidityMs;
 
-    private final UserService userService;
+    private final UserClient userService;
 
     @PostConstruct
     protected void init() {

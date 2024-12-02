@@ -25,6 +25,61 @@ import java.util.Optional;
 @RequestMapping("/api/post")
 public class PostController {
 
+    private  final PostService postService;
+
+    @PostMapping("/create")
+    public ResponseEntity<Post> createPost(@ModelAttribute @Valid CreateDto CreateDto,
+                                           @RequestParam("images") List<MultipartFile> images) throws IOException {
+        Post createdPost = postService.create(CreateDto, images);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getPostById(@PathVariable String id) {
+        Optional<Post> post = postService.getPostById(id);
+        return post.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePostById(@PathVariable String id) {
+        postService.deletePostById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<Page<WithLikesCount>> getAllPostsByPageAndUsername(
+            @RequestParam(required = false) String searchTerm,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            if (page < 1) {
+                page = 1; // Ensure page number is at least 1
+            }
+
+            Pageable pageable = PageRequest.of(page-1, size);
+            Page<WithLikesCount> posts = postService.findAllByPageAndUsername(searchTerm, pageable);
+            System.out.println(posts);
+            return ResponseEntity.status(HttpStatus.OK).body(posts);
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            System.out.println("An error occurred while processing the request"+ e);
+            // Return an appropriate error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/myPosts")
+    public ResponseEntity<Page<WithLikesCount>> myPosts(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        if (page < 1) {
+            page = 1; // Ensure page number is at least 1
+        }
+
+        Pageable pageable = PageRequest.of(page-1, size);
+        Page<WithLikesCount> posts = postService.myPosts(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
 
 
 

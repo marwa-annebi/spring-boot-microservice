@@ -27,6 +27,9 @@ public class UserService {
     public UserDto login(UserLoginDto credentialsDto) {
         User user = userRepository.findByEmail(credentialsDto.getEmail())
                 .orElseThrow(() ->new AppException("Unknown user", HttpStatus.NOT_FOUND));
+        if (user==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User does not exist");
+        }
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.getPassword()), user.getPassword())) {
             return toUserDto(user);
@@ -50,10 +53,10 @@ public class UserService {
         return toUserDto(savedUser);
     }
 
-    public UserDto findByEmail(String email) {
+    public User findByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown user"));
-        return toUserDto(user);
+        return user;
     }
 
     // Convert User to UserDto

@@ -5,17 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5e96542-4760-4850-abbf-8b6e9dcd278a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/JwksController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../comment/src/main/java/com/example/Comment/Service/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/FeignConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/JwtAuthFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/JwtAuthFilterConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/MongoConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/SecurityUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/UserAuthenticationEntryPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/UserAuthenticationProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/dtos/ErrorDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/dtos/JwtResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/exceptions/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/UserAuthenticationProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/UserAuthenticationProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../comment/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../comment/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../comment/src/main/java/com/example/Comment/Service/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../comment/src/main/java/com/example/Comment/Service/controllers/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../comment/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../comment/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/CorsConfig.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../like/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../like/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/LikeServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/LikeServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/controllers/LikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/controllers/LikeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../like/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../post/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/PostApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/PostApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/client/UserClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/client/UserClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/controllers/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/services/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,15 +67,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.GatewayApplication.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.GatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.example.gateway.config" />
