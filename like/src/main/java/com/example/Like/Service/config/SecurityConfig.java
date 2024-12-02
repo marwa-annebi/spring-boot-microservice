@@ -1,20 +1,21 @@
-package com.example.post.config;
+package com.example.Like.Service.config;
 
-import jakarta.ws.rs.HttpMethod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import javax.crypto.spec.SecretKeySpec;
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
     private final UserAuthenticationEntryPoint userAuthenticationEntryPoint;
     private final UserAuthenticationProvider userAuthenticationProvider;
 
@@ -24,17 +25,14 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthFilter(userAuthenticationProvider), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable()) // CSRF is disabled for stateless APIs
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/post/myPosts","/api/post/{id}"
-                        ).permitAll()
-                        .requestMatchers("/resources/**", "/static/**").permitAll()
-                        .anyRequest().authenticated()
-                )
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.POST, "/api/like/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/like/**").permitAll()
+            )
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(userAuthenticationEntryPoint)
                 );
         return http.build();
     }
-
 }

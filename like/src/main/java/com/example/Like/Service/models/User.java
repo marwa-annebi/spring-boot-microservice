@@ -1,32 +1,40 @@
 package com.example.Like.Service.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.Date;
 
-@Data
-@Builder
+@Document(collection = "users")
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "likes")
-public class Like {
+@Builder
+@Data
+public class User {
+
     @Id
     private String id;
 
-    @DocumentReference
-    private User likedBy;
+    private String userName;
 
-    @DocumentReference
-    private Post post;
-    private boolean top;
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String password;
+
     @CreatedDate
     private Date createdAt;
 
     @LastModifiedDate
     private Date updatedAt;
+
 }

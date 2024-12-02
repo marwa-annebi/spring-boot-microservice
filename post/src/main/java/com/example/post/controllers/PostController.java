@@ -23,6 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/post")
+@CrossOrigin
 public class PostController {
 
     private  final PostService postService;
@@ -35,7 +36,9 @@ public class PostController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable String id) {
+        System.out.println("posttttttttt");
         Optional<Post> post = postService.getPostById(id);
+        System.out.println("ressss"+post);
         return post.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 

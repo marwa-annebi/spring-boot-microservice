@@ -7,5 +7,4 @@ import lombok.*;
 @NoArgsConstructor
 public class CreateLikeDto {
     private String postId;
-    private String userId;
 }
