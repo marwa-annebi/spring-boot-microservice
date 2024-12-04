@@ -4,6 +4,8 @@ package com.example.post.dtos;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class WithLikesCount {
     private String id;
@@ -11,11 +13,11 @@ public class WithLikesCount {
     private java.util.List<String> images;
     private String postedBy;
     private java.util.List<?> comments; // Replace '?' with appropriate type
-    private java.time.LocalDateTime createdAt;
-    private java.time.LocalDateTime updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
     private Integer likesCount;
     private Boolean liked;
-    private boolean disliked;
+    private Boolean disliked;
 }
 
 

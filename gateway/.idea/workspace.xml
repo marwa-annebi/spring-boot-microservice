@@ -5,17 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5e96542-4760-4850-abbf-8b6e9dcd278a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/GatewayCorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/config/SecurityUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/client/LikeClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/RestTemplateConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway.log # Optional" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/GatewayCorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/GatewayCorsConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/client/PostClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/client/PostClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/client/UserClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/client/UserClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/controllers/LikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/controllers/LikeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/repositories/LikeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/repositories/LikeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/services/LikeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/services/LikeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/controllers/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/WebConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/dtos/WithLikesCount.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/dtos/WithLikesCount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/services/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

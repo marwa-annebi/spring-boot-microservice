@@ -1,5 +1,6 @@
 package com.example.post.services;
 
+import com.example.post.client.LikeClient;
 import com.example.post.client.UserClient;
 import com.example.post.config.SecurityUtils;
 import com.example.post.dtos.CreateDto;
@@ -19,9 +20,11 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,6 +33,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.springframework.data.mongodb.core.query.Query.query;
 
@@ -40,7 +44,7 @@ public class PostService {
     private final UserClient userClient;
     private final MongoTemplate mongoTemplate;
     private final ImageService imageService;
-
+    private final LikeClient likeClient; // Inject LikeClient
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
     // Helper method to map CreateDto to Post
@@ -163,42 +167,48 @@ public class PostService {
     }
 
     public Page<WithLikesCount> myPosts(Pageable pageable) {
-        // Extract user ID from the authenticated JWT token
         // Get authenticated user
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("userDetails: " + userDetails);
-
-        // Fetch user by email
         User user = userClient.findByEmail(userDetails.getEmail());
-        System.out.println("user: " + user);
+
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
         }
 
-        // Use the user ID to filter posts
+        // Fetch posts for the user
         Criteria criteria = Criteria.where("postedBy").is(new ObjectId(user.getId().toString()));
+        Query query = new Query(criteria).with(pageable);
+        List<Post> posts = mongoTemplate.find(query, Post.class, "posts");
 
-        // MongoDB aggregation pipeline
-        Aggregation aggregation = Aggregation.newAggregation(
-                Aggregation.match(criteria), // Filter posts by user ID
-                Aggregation.lookup("likes", "_id", "post", "likes"), // Join with 'likes' collection
-                Aggregation.project("_id", "description", "images", "postedBy", "comments", "createdAt", "updatedAt")
-                        .and(ArrayOperators.Size.lengthOfArray("likes")).as("likesCount") // Count likes
-                        .and(ConditionalOperators.when(
-                                        ComparisonOperators.valueOf("likes.likedBy").equalToValue(new ObjectId(user.getId().toString())))
-                                .then(true)
-                                .otherwise(false)).as("liked"), // Check if user liked the post
-                Aggregation.sort(Sort.by(Sort.Direction.DESC, "createdAt")), // Sort by creation date
-                Aggregation.skip(pageable.getOffset()), // Pagination
-                Aggregation.limit(pageable.getPageSize())
-        );
+        // Fetch post IDs
+        List<String> postIds = posts.stream()
+                .map(post -> post.getId()) // Explicitly convert ObjectId to String
+                .collect(Collectors.toList());
 
-        // Execute aggregation query
-        List<WithLikesCount> posts = mongoTemplate.aggregate(aggregation, "posts", WithLikesCount.class).getMappedResults();
+System.out.println(postIds);
+        // Fetch likes, dislikes, and user-specific interactions using LikeClient
+        Map<String, Integer> likesCount = likeClient.getLikesCount(postIds);
+        Map<String, Integer> dislikesCount = likeClient.getDislikesCount(postIds);
+        Map<String, Boolean> likedByUser = likeClient.getUserLikes(postIds);
+        Map<String, Boolean> dislikedByUser = likeClient.getUserDislikes(postIds);
 
-        long count = getCountOfMatchedDocuments("", true);
+        // Aggregate data into DTO
+        List<WithLikesCount> enrichedPosts = posts.stream().map(post -> {
+            WithLikesCount enrichedPost = new WithLikesCount();
+            enrichedPost.setId(post.getId().toString());
+            enrichedPost.setDescription(post.getDescription());
+            enrichedPost.setImages(post.getImages());
+            enrichedPost.setPostedBy(post.getPostedBy().toString());
+            enrichedPost.setCreatedAt(post.getCreatedAt());
+            enrichedPost.setUpdatedAt(post.getUpdatedAt());
+            enrichedPost.setLikesCount(likesCount.getOrDefault(post.getId().toString(), 0));
+            enrichedPost.setDisliked(dislikesCount.getOrDefault(post.getId().toString(), 0) > 0);
+            enrichedPost.setLiked(likedByUser.getOrDefault(post.getId().toString(), false));
+            enrichedPost.setDisliked(dislikedByUser.getOrDefault(post.getId().toString(), false));
+            return enrichedPost;
+        }).collect(Collectors.toList());
 
-        return new PageImpl<>(posts, pageable, count);
+        long totalPosts = mongoTemplate.count(query.skip(0).limit(0), "posts");
+        return new PageImpl<>(enrichedPosts, pageable, totalPosts);
     }
-
 }

@@ -23,13 +23,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .addFilterBefore(new JwtAuthFilter(userAuthenticationProvider), BasicAuthenticationFilter.class)
+                .cors().and()
                 .csrf(csrf -> csrf.disable()) // CSRF is disabled for stateless APIs
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/api/like/**").authenticated()
-                .requestMatchers(HttpMethod.GET, "/api/like/**").permitAll()
-            )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/like/count","/api/like/**"
+                        ).permitAll()
+                        .requestMatchers("/resources/**", "/static/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(userAuthenticationEntryPoint)
                 );

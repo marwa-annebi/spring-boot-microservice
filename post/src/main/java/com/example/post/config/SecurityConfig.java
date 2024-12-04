@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/post/myPosts","/api/post/{id}"
+                                "/api/post/myPosts","/api/post/{id}","/api/post/**"
                         ).permitAll()
                         .requestMatchers("/resources/**", "/static/**").permitAll()
                         .anyRequest().authenticated()
