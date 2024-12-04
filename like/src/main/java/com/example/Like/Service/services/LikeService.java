@@ -32,7 +32,7 @@ public class LikeService {
         System.out.println("userDetails: " + userDetails);
         // Fetch user and post using Feign clients
         User user = userClient.findByEmail(userDetails.getEmail());
-        Post post = postClient.getPostById(createLikeDto.getPostId()).getBody();
+        Post post = postClient.getPostById(createLikeDto.getPostId());
 
         if (post == null) {
             throw new ChangeSetPersister.NotFoundException();
@@ -54,7 +54,7 @@ public class LikeService {
         System.out.println("userDetails: " + userDetails);
         // Fetch user and post using Feign clients
         User user = userClient.findByEmail(userDetails.getEmail());
-        Post post = postClient.getPostById(createLikeDto.getPostId()).getBody();
+        Post post = postClient.getPostById(createLikeDto.getPostId());
         Query query = new Query();
         query.addCriteria(Criteria.where("likedBy").is(new ObjectId(user.getId())).and("post").is(new ObjectId(post.getId())));
         Like existingLike = mongoTemplate.findOne(query,Like.class);
