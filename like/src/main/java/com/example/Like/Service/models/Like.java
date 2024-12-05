@@ -29,4 +29,6 @@ public class Like {
 
     @LastModifiedDate
     private Date updatedAt;
+
+
 }

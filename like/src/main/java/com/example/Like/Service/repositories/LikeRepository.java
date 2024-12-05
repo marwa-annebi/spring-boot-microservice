@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface LikeRepository extends MongoRepository<Like, String> {
     Optional<Like> findByLikedByAndPost(User likedBy, Post post);
 
-    long countByPostAndTop(String postId, boolean isLike);
-
+//    long countByPostAndTop(String postId, boolean isLike);
+long countByPostAndTop(Post post, boolean isLike);
     boolean existsByLikedByAndPostAndTop(User likedBy, String postId, boolean isLike);
 }

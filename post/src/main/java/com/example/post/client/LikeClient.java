@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
+@FeignClient(name = "like-service", configuration = FeignConfig.class)
 
-@FeignClient(name = "like-service", url = "${application.config.likes-url}", configuration = FeignConfig.class)
+//@FeignClient(name = "like-service", url = "${application.config.likes-url}", configuration = FeignConfig.class)
 public interface LikeClient {
 
     /**

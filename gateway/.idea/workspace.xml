@@ -5,24 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5e96542-4760-4850-abbf-8b6e9dcd278a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/config/SecurityUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/client/LikeClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/RestTemplateConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/dtos/JwtResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/main/java/com/example/auth/dtos/JwtResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/GatewayCorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/GatewayCorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/gateway/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/client/PostClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/client/PostClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/client/UserClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/client/UserClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../like/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/controllers/LikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/controllers/LikeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/dtos/CreateLikeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/dtos/CreateLikeDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/models/Like.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/models/Like.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/models/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/models/Post.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/repositories/LikeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/repositories/LikeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/services/LikeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/java/com/example/Like/Service/services/LikeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../like/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../like/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/config/WebConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/dtos/WithLikesCount.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/dtos/WithLikesCount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/services/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../post/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/client/LikeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/client/LikeClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../post/src/main/java/com/example/post/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../post/src/main/java/com/example/post/controllers/PostController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +38,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+        <option name="mavenHome" value="Use Maven wrapper" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -55,15 +51,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.GatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GatewayApplication.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/LENOVO/spring-boot-microservice/gateway",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.example.gateway.config" />
@@ -71,6 +79,15 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.gateway.config" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.gateway.GatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -80,7 +97,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732636212276</updated>
+      <workItem from="1733384074124" duration="5928000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

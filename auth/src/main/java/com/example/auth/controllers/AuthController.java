@@ -7,6 +7,7 @@ import com.example.auth.models.User;
 import com.example.auth.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,26 +43,51 @@ public class AuthController {
         createdUser.setToken(userAuthenticationProvider.createToken(user.getEmail()));
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
+
+    //    @PostMapping("/refreshToken")
+//    public JwtResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+//
+//        // Decode refresh token to get user information
+//        String refreshToken = refreshTokenRequest.getToken();
+//        User userDto = userAuthenticationProvider.decodeRefreshToken(refreshToken);
+//
+//        // Create a new access token for the user
+//        String accessToken = userAuthenticationProvider.createToken(userDto.getEmail());
+//
+//        // Generate a new refresh token
+//        String newRefreshToken = userAuthenticationProvider.generateRefreshToken(userDto.getEmail());
+//
+//        // Return the new access token along with the new refresh token
+//        return JwtResponse.builder()
+//                .accessToken(accessToken)
+//                .refreshToken(newRefreshToken)
+//                .build();
+//    }
     @PostMapping("/refreshToken")
-    public JwtResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public ResponseEntity<JwtResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        try {
+            // Decode refresh token to get user information
+            String refreshToken = refreshTokenRequest.getToken();
+            User userDto = userAuthenticationProvider.decodeRefreshToken(refreshToken);
 
-        // Decode refresh token to get user information
-        String refreshToken = refreshTokenRequest.getToken();
-        User userDto = userAuthenticationProvider.decodeRefreshToken(refreshToken);
+            // Create a new access token for the user
+            String accessToken = userAuthenticationProvider.createToken(userDto.getEmail());
 
-        // Create a new access token for the user
-        String accessToken = userAuthenticationProvider.createToken(userDto.getEmail());
+            // Generate a new refresh token
+            String newRefreshToken = userAuthenticationProvider.generateRefreshToken(userDto.getEmail());
 
-        // Generate a new refresh token
-        String newRefreshToken = userAuthenticationProvider.generateRefreshToken(userDto.getEmail());
-
-        // Return the new access token along with the new refresh token
-        return JwtResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(newRefreshToken)
-                .build();
+            // Return the new access token along with the new refresh token
+            return ResponseEntity.ok(JwtResponse.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(newRefreshToken)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(JwtResponse.builder()
+                            .message("Invalid or expired refresh token")
+                            .build());
+        }
     }
-
 }
 
 

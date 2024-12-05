@@ -33,5 +33,8 @@ public class Post {
 
     @LastModifiedDate
     private Date updatedAt;
-
+    // Constructor for ID only
+    public Post(String id) {
+        this.id = id;
+    }
 }

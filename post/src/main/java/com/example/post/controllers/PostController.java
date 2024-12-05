@@ -33,11 +33,16 @@ public class PostController {
         Post createdPost = postService.create(CreateDto, images);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
     }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Post> getPostById(@PathVariable String id) {
+//        System.out.println("posttttttttt");
+//        Optional<Post> post = postService.getPostById(id);
+//        System.out.println("ressss"+post);
+//        return post.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+//    }
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable String id) {
-        System.out.println("posttttttttt");
         Optional<Post> post = postService.getPostById(id);
-        System.out.println("ressss"+post);
         return post.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -82,6 +87,17 @@ public class PostController {
 
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
+//@GetMapping("/myPosts")
+//public ResponseEntity<Page<WithLikesCount>> getMyPosts(
+//        @RequestParam(defaultValue = "1") int page,
+//        @RequestParam(defaultValue = "10") int size) {
+//    if (page < 1) page = 1;
+//
+//    Pageable pageable = PageRequest.of(page - 1, size);
+//    Page<WithLikesCount> myPosts = postService.myPosts(pageable);
+//
+//    return ResponseEntity.ok(myPosts);
+//}
 
 
 
