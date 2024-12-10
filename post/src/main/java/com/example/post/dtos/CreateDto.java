@@ -6,14 +6,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CreateDto {
-
+    private String title;
     @NotBlank(message = "Description is mandatory")
     @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
+//    private List<String> images;
 
 
+    private String postedBy;
 }
 
 

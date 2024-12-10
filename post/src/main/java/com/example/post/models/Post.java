@@ -1,3 +1,4 @@
+
 package com.example.post.models;
 
 import lombok.AllArgsConstructor;

@@ -1,11 +1,10 @@
 package com.example.auth.controllers;
 
+import com.example.auth.models.User;
 import com.example.auth.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -21,5 +20,9 @@ public class UserController {
         System.out.println(principal);
         return principal;
     }
-
+    @GetMapping("/details/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable String id) {
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
 }

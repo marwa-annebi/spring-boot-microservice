@@ -9,6 +9,7 @@ import com.example.post.dtos.UserDto;
 import com.example.post.models.User;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,7 @@ public class UserAuthenticationProvider {
 
     @Value("${security.jwt.refresh-token.validity-ms:15552000000}") // Validity for refresh token is 180 days
     private long refreshTokenValidityMs;
-
+    @Autowired
     private final UserClient userService;
 
     @PostConstruct
@@ -47,6 +48,7 @@ public class UserAuthenticationProvider {
                 .withExpiresAt(validity)
                 .sign(algorithm);
     }
+
     public String generateRefreshToken(String login) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + refreshTokenValidityMs);
@@ -58,6 +60,7 @@ public class UserAuthenticationProvider {
                 .withExpiresAt(validity)
                 .sign(algorithm);
     }
+
     public Authentication validateToken(String token) {
         System.out.println(token);
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
@@ -83,5 +86,6 @@ public class UserAuthenticationProvider {
 
         return userService.findByEmail(decoded.getSubject());
     }
+
 
 }

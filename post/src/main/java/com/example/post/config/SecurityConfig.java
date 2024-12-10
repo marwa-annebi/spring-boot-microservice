@@ -24,12 +24,11 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthFilter(userAuthenticationProvider), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable()) // CSRF is disabled for stateless APIs
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/post/myPosts","/api/post/{id}","/api/post/**"
-                        ).permitAll()
-                        .requestMatchers("/resources/**", "/static/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/post/**", "/api/post/{id}", "/api/post/all","/api/post/my-posts").permitAll() // Public endpoints
+                        .requestMatchers("/api/post/my-posts").authenticated()
+                        .anyRequest().permitAll()
                 )
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(userAuthenticationEntryPoint)

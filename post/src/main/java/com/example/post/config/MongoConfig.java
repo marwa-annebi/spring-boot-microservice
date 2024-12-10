@@ -15,3 +15,16 @@ public class MongoConfig {
         return new MongoTemplate(new SimpleMongoClientDatabaseFactory("mongodb://localhost:27017/postdb"));
     }
 }
+
+//package com.example.post.config;
+//
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+//
+//@Configuration
+//public class MongoConfig extends AbstractMongoClientConfiguration {
+//    @Override
+//    protected String getDatabaseName() {
+//        return "postdb"; // Nom de la base de données MongoDB
+//    }
+//}

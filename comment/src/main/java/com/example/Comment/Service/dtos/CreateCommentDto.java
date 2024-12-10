@@ -1,12 +1,16 @@
+
 package com.example.Comment.Service.dtos;
 
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class CreateCommentDto {
+    @NotBlank(message = "Post ID is mandatory")
     private String postId;
-    private String userId;
+
+    @NotBlank(message = "Comment text is mandatory")
     private String text;
+    private String parentCommentId; // For nested replies
+
 }

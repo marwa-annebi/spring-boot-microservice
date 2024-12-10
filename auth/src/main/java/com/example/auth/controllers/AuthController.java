@@ -44,25 +44,6 @@ public class AuthController {
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
-    //    @PostMapping("/refreshToken")
-//    public JwtResponse refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-//
-//        // Decode refresh token to get user information
-//        String refreshToken = refreshTokenRequest.getToken();
-//        User userDto = userAuthenticationProvider.decodeRefreshToken(refreshToken);
-//
-//        // Create a new access token for the user
-//        String accessToken = userAuthenticationProvider.createToken(userDto.getEmail());
-//
-//        // Generate a new refresh token
-//        String newRefreshToken = userAuthenticationProvider.generateRefreshToken(userDto.getEmail());
-//
-//        // Return the new access token along with the new refresh token
-//        return JwtResponse.builder()
-//                .accessToken(accessToken)
-//                .refreshToken(newRefreshToken)
-//                .build();
-//    }
     @PostMapping("/refreshToken")
     public ResponseEntity<JwtResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         try {
