@@ -2,7 +2,7 @@ package com.example.Comment.Service.services;
 
 import com.example.Comment.Service.client.PostClient;
 import com.example.Comment.Service.client.UserClient;
-import com.example.Comment.Service.dtos.CreateCommentDto;
+import com.example.Comment.Service.dtos.*;
 import com.example.Comment.Service.models.Comment;
 import com.example.Comment.Service.models.Post;
 import com.example.Comment.Service.models.User;
@@ -23,10 +23,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -37,6 +34,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostClient postClient;
     private final MongoTemplate mongoTemplate;
+    private  final UserClient userClient;
 
 
     public Comment addComment(CreateCommentDto createCommentDto) {
@@ -48,7 +46,6 @@ public class CommentService {
                 .text(createCommentDto.getText())
                 .postId(new Post(createCommentDto.getPostId()))
                 .userId(user)
-                .parentCommentId(createCommentDto.getParentCommentId())
                 .build();
 
         // Save the comment
@@ -62,11 +59,70 @@ public class CommentService {
 //    public long countCommentsByPostId(String postId) {
 //        return commentRepository.countByPostId(postId);
 //    }
-public List<Comment> getCommentsByPostId(String postId) {
-    // Query by the Post object instead of the string ID
-    Post post = new Post(postId);
-    return commentRepository.findByPostId(post);
+public List<CommentWithUserDetails> getCommentsWithUserDetails(String postId) {
+    // Step 1: Fetch comments by postId with replies
+    List<CommentDto> comments = getCommentsWithReplies(postId);
+
+    // Step 2: Extract user IDs from comments and replies
+    List<String> userIds = comments.stream()
+            .flatMap(comment -> extractUserIdsFromComment(comment).stream())
+            .distinct()
+            .collect(Collectors.toList());
+
+    // Step 3: Fetch user details from user-service
+    List<User> userDetails = userClient.getUserDetails(userIds);
+
+    // Step 4: Map user details by userId for quick lookup
+    Map<String, User> userDetailsMap = userDetails.stream()
+            .collect(Collectors.toMap(User::getId, user -> user));
+
+    // Step 5: Enrich comments with user details and replies
+    return comments.stream()
+            .map(comment -> enrichCommentWithUserDetails(comment, userDetailsMap))
+            .collect(Collectors.toList());
 }
+
+    private List<CommentDto> getCommentsWithReplies(String postId) {
+        ObjectId objectId = new ObjectId(postId);
+        Aggregation aggregation = Aggregation.newAggregation(
+                // Match comments by postId
+                Aggregation.match(Criteria.where("postId").is(objectId)),
+
+                // Lookup for replies
+                Aggregation.lookup("comments", "_id", "parentCommentId", "replies"),
+
+                // Project the required fields
+                Aggregation.project("text", "userId", "postId", "_id", "replies", "createdAt")
+                        .and("_id").as("id")
+        );
+
+        return mongoTemplate.aggregate(aggregation, "comments", CommentDto.class)
+                .getMappedResults();
+    }
+
+    private List<String> extractUserIdsFromComment(CommentDto comment) {
+        List<String> userIds = new ArrayList<>();
+        userIds.add(comment.getUserId());
+        if (comment.getReplies() != null) {
+            for (CommentDto reply : comment.getReplies()) {
+                userIds.addAll(extractUserIdsFromComment(reply));
+            }
+        }
+        return userIds;
+    }
+
+    private CommentWithUserDetails enrichCommentWithUserDetails(CommentDto comment, Map<String, User> userDetailsMap) {
+        User userDetails = userDetailsMap.get(comment.getUserId());
+        List<CommentWithUserDetails> enrichedReplies = new ArrayList<>();
+
+        if (comment.getReplies() != null) {
+            enrichedReplies = comment.getReplies().stream()
+                    .map(reply -> enrichCommentWithUserDetails(reply, userDetailsMap))
+                    .collect(Collectors.toList());
+        }
+
+        return new CommentWithUserDetails(comment, userDetails, enrichedReplies);
+    }
     public Map<String, Long> getCommentCountsByPosts(List<String> postIds) {
         // Match comments with the given post IDs
         AggregationOperation matchOperation = Aggregation.match(
@@ -115,14 +171,41 @@ public List<Comment> getCommentsByPostId(String postId) {
 //                        postId -> commentRepository.countByPostId(postId)
 //                ));
 //    }
+private ObjectId safeConvertToObjectId(String id) {
+    try {
+        return new ObjectId(id); // Attempt to convert the string to ObjectId
+    } catch (IllegalArgumentException e) {
+        // Log the error for debugging (optional)
+        System.err.println("Invalid ObjectId: " + id);
+        return null; // Return null for invalid ObjectId
+    }
+}
 
     public Map<String, Long> getCommentCounts(List<String> postIds) {
-        // Build the query to filter comments by the given postIds
-        Query query = new Query(Criteria.where("postId").in(postIds));
-        List<Comment> comments = mongoTemplate.find(query, Comment.class);
+        // Convert string postIds to ObjectId instances
+        List<ObjectId> objectIds = postIds.stream()
+                .map(this::convertToObjectId)
+                .filter(Objects::nonNull) // Exclude nulls for invalid IDs
+                .collect(Collectors.toList());
 
-        // Group comments by postId and count them
-        Map<String, Long> commentCounts = comments.stream()
+        // Define the aggregation pipeline
+        Aggregation aggregation = Aggregation.newAggregation(
+                // Match comments for the provided postIds
+                Aggregation.match(Criteria.where("postId").in(objectIds)),
+
+                // Perform a lookup to join comments with the posts collection in another database
+                Aggregation.lookup("postdb.posts", "_id", "_id", "postDetails"),
+
+                // Unwind the postDetails array (if needed)
+                Aggregation.unwind("postDetails", true) // true = preserve nulls
+        );
+
+        // Execute the aggregation pipeline
+        List<CommentWithPostDetails> results = mongoTemplate.aggregate(
+                aggregation, "comments", CommentWithPostDetails.class).getMappedResults();
+
+        // Group the results by postId and count the number of comments
+        Map<String, Long> commentCounts = results.stream()
                 .filter(comment -> comment.getPostId() != null) // Ensure postId is not null
                 .collect(Collectors.groupingBy(
                         comment -> comment.getPostId().toString(), // Convert ObjectId to String
@@ -134,6 +217,15 @@ public List<Comment> getCommentsByPostId(String postId) {
 
         return commentCounts;
     }
+
+    private ObjectId convertToObjectId(String id) {
+        try {
+            return new ObjectId(id); // Attempt to convert the string to ObjectId
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid ObjectId format: " + id);
+            return null; // Return null for invalid ObjectId strings
+        }
+    }
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
@@ -141,7 +233,36 @@ public List<Comment> getCommentsByPostId(String postId) {
         }
         throw new RuntimeException("Unauthorized: No authenticated user found");
     }
+    public Comment addReply(CreateReplyDto createReplyDto) {
+        // Get the current authenticated user
+        User currentUser = getCurrentUser();
 
+        // Fetch the parent comment
+        Optional<Comment> parentCommentOpt = commentRepository.findById(createReplyDto.getParentCommentId());
+        System.out.println(parentCommentOpt);
+        if (parentCommentOpt.isEmpty()) {
+            throw new RuntimeException("Parent comment not found.");
+        }
+        Comment parentComment = parentCommentOpt.get();
+
+        // Create a new reply
+        Comment reply = Comment.builder()
+                .text(createReplyDto.getReplyText())
+                .postId(parentComment.getPostId())
+                .userId(currentUser)
+                .parentCommentId(parentComment)
+                .build();
+
+        // Save the reply
+        Comment savedReply = commentRepository.save(reply);
+
+        // Use MongoTemplate to update the parent comment's replies field
+        Query query = new Query(Criteria.where("_id").is(parentComment.getId()));
+        Update update = new Update().push("replies", savedReply.getId()); // Add the reply's ID to the replies list
+        mongoTemplate.updateFirst(query, update, Comment.class);
+
+        return savedReply;
+    }
 //    public Map<String, Long> getLikeDislikeCounts(String postId) {
 //        Post post = new Post(postId);
 //

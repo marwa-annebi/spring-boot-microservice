@@ -3,10 +3,7 @@ package com.example.post.services;
 import com.example.post.client.CommentClient;
 import com.example.post.client.LikeClient;
 import com.example.post.client.UserClient;
-import com.example.post.dtos.CreateDto;
-import com.example.post.dtos.LikeDetailsDto;
-import com.example.post.dtos.UpdatePostDto;
-import com.example.post.dtos.WithLikesCount;
+import com.example.post.dtos.*;
 import com.example.post.models.Post;
 import com.example.post.models.User;
 import com.example.post.repositories.PostRepository;
@@ -138,9 +135,6 @@ public Page<Post> findPostsByCurrentUser(String userId, Pageable pageable) {
             operations.add(Aggregation.match(searchCriteria));
         }
 
-        // Count likes for each post
-
-
         // Sort and paginate
         operations.add(Aggregation.sort(Sort.by(Sort.Direction.DESC, "createdAt")));
         operations.add(Aggregation.skip(pageable.getOffset()));
@@ -150,11 +144,18 @@ public Page<Post> findPostsByCurrentUser(String userId, Pageable pageable) {
         Aggregation aggregation = Aggregation.newAggregation(operations);
         List<WithLikesCount> results = mongoTemplate.aggregate(aggregation, "posts", WithLikesCount.class).getMappedResults();
 
+        // Enrich posts with user details
+        results.forEach(post -> {
+            User userDto = userClient.getUserById(post.getPostedBy());
+            post.setPostedByUserDetails(userDto);
+        });
+
         // Count documents
-        long count = getCountOfMatchedDocuments(userId,searchTerm, false);
+        long count = getCountOfMatchedDocuments(userId, searchTerm, false);
 
         return new PageImpl<>(results, pageable, count);
     }
+
     private long getCountOfMatchedDocuments(String userId, String searchTerm, boolean myPosts) {
         Criteria criteria;
 

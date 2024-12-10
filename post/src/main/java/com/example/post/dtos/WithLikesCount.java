@@ -2,6 +2,7 @@
 
 package com.example.post.dtos;
 
+import com.example.post.models.User;
 import lombok.Data;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class WithLikesCount {
     private Integer likesCount;
     private Boolean liked;
     private Boolean disliked;
+    private User postedByUserDetails;
 }
 
 

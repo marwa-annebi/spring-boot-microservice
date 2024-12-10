@@ -4,9 +4,11 @@ import com.example.auth.models.User;
 import com.example.auth.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,5 +26,10 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable String id) {
         User user = userService.getUserById(id);
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/list")
+    public List<User> getUserDetails(@RequestBody List<String> userIds) {
+        return userService.getUserDetailsByIds(userIds);
     }
 }

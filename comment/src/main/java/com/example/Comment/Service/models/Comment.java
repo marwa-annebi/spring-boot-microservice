@@ -31,8 +31,8 @@ public class Comment {
 
     @DocumentReference
     private User userId;
-
-    private String parentCommentId;
+    @DocumentReference
+    private Comment parentCommentId;
 
     private List<String> replies = new ArrayList<>(); // Stores IDs of replies
 
@@ -44,7 +44,7 @@ public class Comment {
 
     // Additional helper methods (if required)
     public boolean isReply() {
-        return parentCommentId != null && !parentCommentId.isEmpty();
+        return parentCommentId != null;
     }
 
 

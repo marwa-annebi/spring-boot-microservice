@@ -1,14 +1,14 @@
 package com.example.Comment.Service.controllers;
 
+import com.example.Comment.Service.dtos.CommentWithUserDetails;
 import com.example.Comment.Service.dtos.CreateCommentDto;
-import com.example.Comment.Service.dtos.ErrorDto;
+import com.example.Comment.Service.dtos.CreateReplyDto;
 import com.example.Comment.Service.models.Comment;
-import com.example.Comment.Service.models.Post;
 import com.example.Comment.Service.services.CommentService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +28,7 @@ public class CommentController {
 
     @PostMapping("/count")
     public ResponseEntity<Map<String, Long>> getCommentCounts(@RequestBody List<String> postIds) {
+        System.out.println("postIds"+postIds);
         Map<String, Long> commentCounts = commentService.getCommentCounts(postIds);
         return ResponseEntity.ok(commentCounts);
     }
@@ -38,9 +39,16 @@ public class CommentController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable String postId) {
-        List<Comment> comments = commentService.getCommentsByPostId(postId);
+    public ResponseEntity<List<CommentWithUserDetails>> getCommentsByPostId(@PathVariable String postId) {
+        List<CommentWithUserDetails> comments = commentService.getCommentsWithUserDetails(postId);
         return ResponseEntity.ok(comments);
+    }
+    @PostMapping("/reply")
+    public ResponseEntity<Comment> addReply(
+            @Validated @RequestBody CreateReplyDto createReplyDto) {
+
+        Comment reply = commentService.addReply(createReplyDto);
+        return ResponseEntity.ok(reply);
     }
 //    @PostMapping("/count")
 //    public ResponseEntity<Map<String, Long>> getCommentCountsByPosts(@RequestBody List<String> postIds) {

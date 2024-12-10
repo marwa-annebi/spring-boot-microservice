@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.CharBuffer;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -89,5 +91,23 @@ public class UserService {
     public User getUserById(String userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+    }
+
+    public List<User> getUserDetailsByIds(List<String> userIds) {
+        // Fetch users from the database based on the provided IDs
+        List<User> users = userRepository.findByIdIn(userIds);
+
+        // Map the User entities to UserDetails DTOs
+        return users.stream()
+                .map(user -> {
+                    User userDetails = new User();
+                    userDetails.setId(user.getId());
+                    userDetails.setUserName(user.getUserName());
+                    userDetails.setEmail(user.getEmail());
+                    userDetails.setLastName(user.getLastName());
+                    userDetails.setFirstName(user.getFirstName());
+                    return userDetails;
+                })
+                .collect(Collectors.toList());
     }
 }
