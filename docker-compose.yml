@@ -1,41 +1,135 @@
-version: '3.8'
+
+version: "3.8"
 
 services:
+  # Eureka Server
   eureka-server:
-    build: ./eureka
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
+    container_name: eureka-server
     ports:
       - "8761:8761"
+    networks:
+      - microservices-network
+    environment:
+      - JAVA_OPTS=-Xmx512m -Xms256m
 
+  # API Gateway
   api-gateway:
-    build: ./gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
     ports:
       - "8080:8080"
     depends_on:
-      - eureka
+      - eureka-server
+    networks:
+      - microservices-network
 
-  user-service:
-    build: ./user
+  # Auth Service
+  auth-service:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    container_name: auth-service
     ports:
-      - "8081:8080"
+      - "8085:8085"
     depends_on:
-      - eureka
+      - eureka-server
       - mongodb
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - MONGO_URI=mongodb://mongodb:27017/userdb
 
+
+
+  # Post Service
   post-service:
-    build: ./post
+    build:
+      context: ./post
+      dockerfile: Dockerfile
+    container_name: post-service
     ports:
-      - "8082:8080"
+      - "8087:8087"
     depends_on:
-      - eureka
+      - eureka-server
       - mongodb
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - MONGO_URI=mongodb://mongodb:27017/postdb
 
+  # Like Service
+  like-service:
+    build:
+      context: ./like
+      dockerfile: Dockerfile
+    container_name: like-service
+    ports:
+      - "8088:8088"
+    depends_on:
+      - eureka-server
+      - mongodb
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - MONGO_URI=mongodb://mongodb:27017/like_db
+  # Comment Service
+  comment-service:
+    build:
+      context: ./comment
+      dockerfile: Dockerfile
+    container_name: comment-service
+    ports:
+      - "8089:8089"
+    depends_on:
+      - eureka-server
+      - mongodb
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - MONGO_URI=mongodb://mongodb:27017/comment_db
+  # Notification Service
+  notification-service:
+    build:
+      context: ./notification
+      dockerfile: Dockerfile
+    container_name: notification-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+      - mongodb
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - MONGO_URI=mongodb://mongodb:27017/notifications_db
+
+  # MongoDB
   mongodb:
     image: mongo:latest
     container_name: mongodb
     ports:
       - "27017:27017"
+    networks:
+      - microservices-network
     volumes:
-      - mongodb_data:/data/db
+      - mongo_data:/data/db
+
+networks:
+  microservices-network:
+    driver: bridge
 
 volumes:
-  mongodb_data:
+  mongo_data:
+
+
+#  docker-compose up --build

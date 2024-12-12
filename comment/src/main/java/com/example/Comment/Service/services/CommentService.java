@@ -86,7 +86,7 @@ public List<CommentWithUserDetails> getCommentsWithUserDetails(String postId) {
         ObjectId objectId = new ObjectId(postId);
         Aggregation aggregation = Aggregation.newAggregation(
                 // Match comments by postId
-                Aggregation.match(Criteria.where("postId").is(objectId)),
+                Aggregation.match(Criteria.where("postId").is(objectId).and("parentCommentId").is(null)),
 
                 // Lookup for replies
                 Aggregation.lookup("comments", "_id", "parentCommentId", "replies"),
@@ -248,7 +248,7 @@ private ObjectId safeConvertToObjectId(String id) {
         // Create a new reply
         Comment reply = Comment.builder()
                 .text(createReplyDto.getReplyText())
-                .postId(parentComment.getPostId())
+                .postId(new Post(createReplyDto.getPostId()))
                 .userId(currentUser)
                 .parentCommentId(parentComment)
                 .build();
